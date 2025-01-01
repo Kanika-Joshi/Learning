@@ -1,4 +1,4 @@
-name: Simple Node.js Workflow
+name: SFDX WORKFLOW
 
 on:
   push:
