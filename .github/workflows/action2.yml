@@ -1,4 +1,4 @@
-name: Salesforce CLI Workflow
+name: Simple Node.js Workflow
 
 on:
   push:
@@ -9,22 +9,20 @@ on:
       - main
 
 jobs:
-  sfdx:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Salesforce CLI
-        run: |
-          # Install Salesforce CLI
-          curl -sL https://developer.salesforce.com/media/salesforce-cli/sf/channels/stable/sf-linux-arm.tar.xz -o sfdx-linux-x64.tar.xz
-          tar xJf sfdx-linux-x64.tar.xz
-          ./sfdx/install
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
 
-      - name: Verify Salesforce CLI Installation
-        run: sfdx --version
+      - name: Install sfdx
+        run: npm install @salesforce/cli --global
 
-      - name: Run Salesforce Command
-        run: sf org dislay
+      - name: Run list command
+        run: sf org list
