@@ -1,0 +1,30 @@
+name: Salesforce CLI Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  sfdx:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Salesforce CLI
+        run: |
+          # Install Salesforce CLI
+          curl -sL https://developer.salesforce.com/media/salesforce-cli/sf/channels/stable/sf-linux-arm.tar.xz -o sfdx-linux-x64.tar.xz
+          tar xJf sfdx-linux-x64.tar.xz
+          ./sfdx/install
+
+      - name: Verify Salesforce CLI Installation
+        run: sfdx --version
+
+      - name: Run Salesforce Command
+        run: sf org dislay
